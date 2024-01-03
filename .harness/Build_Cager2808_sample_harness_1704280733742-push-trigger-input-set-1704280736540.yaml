@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_Cager2808_sample_harness_1704280733742-push-trigger-input-set
+  identifier: Build_Cager2808_sample_harness_1704280733742pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: Salesforce_harness_app
+  pipeline:
+    identifier: Build_Cager2808_sample_harness_1704280733742
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
