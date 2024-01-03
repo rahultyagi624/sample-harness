@@ -17,31 +17,49 @@ pipeline:
           cloneCodebase: true
           execution:
             steps:
+              - stepGroup:
+                  name: Pre_requisite
+                  identifier: Pre_requisite
+                  steps:
+                    - parallel:
+                        - step:
+                            type: Run
+                            name: npm_install_and_sfdx_cli
+                            identifier: npm_install_and_sfdx_cli
+                            spec:
+                              shell: Bash
+                              command: npm install --global sfdx-cli@$2.19.8
+                        - step:
+                            type: Run
+                            name: npm_install_sfdx_git
+                            identifier: npm_install_sfdx_git
+                            spec:
+                              shell: Bash
+                              command: sudo npm install sfdx-git-delta@^4.x.x -g
               - step:
-                  identifier: npminstall
-                  name: npm_install
-                  spec:
-                    command: npm install
-                  timeout: ""
                   type: Run
-              - step:
-                  identifier: npmtest
-                  name: npm_test
+                  name: Git_Diff_Check
+                  identifier: Git_Diff_Check
                   spec:
-                    command: npm run test
-                  timeout: ""
-                  type: Run
-              - step:
-                  identifier: npmtest1
-                  name: npm_test
-                  spec:
-                    command: npm run lint
-                  timeout: ""
-                  type: Run
+                    shell: Bash
+                    command: |2
+                       git --version
+                       git clone 'https://github.com/Cager2808/Salesforce-demo'
+                       ls -alrt
+                      cd 'Salesforce-demo'
+                      git branch
+                      git diff --diff-filter=ACMRT HEAD^ HEAD
+                      ls -alrt
+                      sgd --to HEAD --from HEAD^ --repo . --output .
+                      ls -lart
+                      echo "package xml"
+                      cat package/package.xml
+                      echo "Display contents of Destructive changes xml"
+                      cat destructiveChanges/destructiveChanges.xml
           platform:
-            arch: Amd64
             os: Linux
+            arch: Amd64
           runtime:
-            spec: {}
             type: Cloud
+            spec: {}
         type: CI
