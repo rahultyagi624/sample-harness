@@ -44,9 +44,9 @@ pipeline:
                     shell: Bash
                     command: |2
                        git --version
-                       git clone 'https://github.com/Cager2808/Salesforce-demo'
+                       git clone 'https://github.com/Cager2808/sample-harness'
                        ls -alrt
-                      cd 'Salesforce-demo'
+                      cd 'sample-harness'
                       git branch
                       git diff --diff-filter=ACMRT HEAD^ HEAD
                       ls -alrt
@@ -56,6 +56,25 @@ pipeline:
                       cat package/package.xml
                       echo "Display contents of Destructive changes xml"
                       cat destructiveChanges/destructiveChanges.xml
+              - step:
+                  type: Run
+                  name: Auth_Salesforce_Org
+                  identifier: Auth_Salesforce_Org
+                  spec:
+                    shell: Bash
+                    command: |-
+                      cd 'sample-harness'
+                      sfdx force:auth:jwt:grant --clientid '3MVG9fe4g9fhX0E70si3nZ7pRd9stUfSWzrw8.TmNpvi20arkTILWJTPcLhXtGP_fsugnQJxKVs6HqTxdqQDG'  --jwtkeyfile server.key --username 'rhitikkhanna260@gmail.com' --instanceurl 'login.salesforce.com'
+              - step:
+                  type: Run
+                  name: Pre_validation
+                  identifier: Pre_validation
+                  spec:
+                    shell: Bash
+                    command: |-
+                      cd 'sample-harness'
+                      sfdx force:source:deploy -c -x package/package.xml --postdestructivechanges destructiveChanges/destructiveChanges.xml --json -u 'rhitikkhanna260@gmail.com' --verbose
+                  description: "Here validating the Test Class Coverage "
           platform:
             os: Linux
             arch: Amd64
@@ -63,3 +82,29 @@ pipeline:
             type: Cloud
             spec: {}
         type: CI
+    - stage:
+        name: Build_Approval
+        identifier: Build_Approval
+        description: ""
+        type: Approval
+        spec:
+          execution:
+            steps:
+              - step:
+                  name: Approval_Build
+                  identifier: Approval_Build
+                  type: HarnessApproval
+                  timeout: 1d
+                  spec:
+                    approvalMessage: |-
+                      Please review the following information
+                      and approve the pipeline progression
+                    includePipelineExecutionHistory: true
+                    approvers:
+                      minimumCount: 1
+                      disallowPipelineExecutor: false
+                      userGroups:
+                        - ADMIN_USER
+                    isAutoRejectEnabled: false
+                    approverInputs: []
+        tags: {}
