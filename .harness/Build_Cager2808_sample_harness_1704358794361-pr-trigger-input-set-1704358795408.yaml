@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_Cager2808_sample_harness_1704358794361-pr-trigger-input-set
+  identifier: Build_Cager2808_sample_harness_1704358794361prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: new_demo5
+  pipeline:
+    identifier: Build_Cager2808_sample_harness_1704358794361
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
