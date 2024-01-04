@@ -77,8 +77,8 @@ pipeline:
                   spec:
                     shell: Bash
                     command: |-
-                      cd 'sample-harness'
-                      sfdx force:source:deploy -c -x package/package.xml --postdestructivechanges destructiveChanges/destructiveChanges.xml --json -u 'rhitikkhanna260@gmail.com' --verbose
+
+                      sfdx force:source:deploy -c -x package/package.xml --postdestructivechanges destructiveChanges/destructiveChanges.xml --json -u rhitikkhanna260@gmail.com --verbose
                   description: "Here validating the Test Class Coverage "
           platform:
             os: Linux
