@@ -61,9 +61,9 @@ pipeline:
                   name: Auth_Salesforce_Org
                   identifier: Auth_Salesforce_Org
                   spec:
-                    shell: Bash
+                    shell: Powershell
                     command: |-
-                      npm install --global sfdx-cli@$2.19.8
+                      # npm install --global sfdx-cli@$2.19.8
                       sfdx --version
                       sfdx force:auth:jwt:grant --clientid 3MVG9fe4g9fhX0E70si3nZ7pRd9stUfSWzrw8.TmNpvi20arkTILWJTPcLhXtGP_fsugnQJxKVs6HqTxdqQDG --jwtkeyfile server.key --username rhitikkhanna260@gmail.com --instance-url https://login.salesforce.com
               - step:
