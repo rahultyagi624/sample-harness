@@ -29,7 +29,8 @@ pipeline:
                             spec:
                               shell: Bash
                               command: |-
-                                npm install --global sfdx-cli@$2.19.8
+                                npm install --global sfdx-cli
+                                sleep 60
 
                                 sfdx --version
                         - step:
