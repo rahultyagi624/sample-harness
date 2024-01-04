@@ -30,7 +30,6 @@ pipeline:
                               shell: Bash
                               command: |-
                                 npm install --global sfdx-cli
-                                sleep 60
 
                                 sfdx --version
                         - step:
@@ -87,29 +86,3 @@ pipeline:
             type: Cloud
             spec: {}
         type: CI
-    - stage:
-        name: Build_Approval
-        identifier: Build_Approval
-        description: ""
-        type: Approval
-        spec:
-          execution:
-            steps:
-              - step:
-                  name: Approval_Build
-                  identifier: Approval_Build
-                  type: HarnessApproval
-                  timeout: 1d
-                  spec:
-                    approvalMessage: |-
-                      Please review the following information
-                      and approve the pipeline progression
-                    includePipelineExecutionHistory: true
-                    approvers:
-                      minimumCount: 1
-                      disallowPipelineExecutor: false
-                      userGroups:
-                        - ADMIN_USER
-                    isAutoRejectEnabled: false
-                    approverInputs: []
-        tags: {}
