@@ -17,6 +17,13 @@ pipeline:
           cloneCodebase: true
           execution:
             steps:
+              - step:
+                  type: Run
+                  name: check
+                  identifier: check
+                  spec:
+                    shell: Sh
+                    command: "ls "
               - stepGroup:
                   name: Pre_requisite
                   identifier: Pre_requisite
@@ -63,8 +70,8 @@ pipeline:
                   spec:
                     shell: Bash
                     command: |-
-                      cd 'sample-harness'
-                      sfdx force:auth:jwt:grant --clientid '3MVG9fe4g9fhX0E70si3nZ7pRd9stUfSWzrw8.TmNpvi20arkTILWJTPcLhXtGP_fsugnQJxKVs6HqTxdqQDG'  --jwtkeyfile server.key --username 'rhitikkhanna260@gmail.com' --instanceurl 'login.salesforce.com'
+                      cd sample-harness
+                      sfdx force:auth:jwt:grant --clientid 3MVG9fe4g9fhX0E70si3nZ7pRd9stUfSWzrw8.TmNpvi20arkTILWJTPcLhXtGP_fsugnQJxKVs6HqTxdqQDG  --jwtkeyfile server.key --username rhitikkhanna260@gmail.com --instanceurl login.salesforce.com
               - step:
                   type: Run
                   name: Pre_validation
