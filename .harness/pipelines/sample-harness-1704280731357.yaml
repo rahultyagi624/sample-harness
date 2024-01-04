@@ -64,7 +64,7 @@ pipeline:
                     shell: Bash
                     command: |-
                       ls -alrt
-                      sfdx force:auth:jwt:grant --clientid 3MVG9fe4g9fhX0E70si3nZ7pRd9stUfSWzrw8.TmNpvi20arkTILWJTPcLhXtGP_fsugnQJxKVs6HqTxdqQDG --jwtkeyfile server.key --username rhitikkhanna260@gmail.com --instanceurl login.salesforce.com
+                      sfdx force:auth:jwt:grant --clientid 3MVG9fe4g9fhX0E70si3nZ7pRd9stUfSWzrw8.TmNpvi20arkTILWJTPcLhXtGP_fsugnQJxKVs6HqTxdqQDG --jwtkeyfile server.key --username rhitikkhanna260@gmail.com --instance-url https://login.salesforce.com
               - step:
                   type: Run
                   name: Pre_validation
