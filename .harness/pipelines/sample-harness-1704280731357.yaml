@@ -17,15 +17,6 @@ pipeline:
           cloneCodebase: true
           execution:
             steps:
-              - step:
-                  type: Run
-                  name: check
-                  identifier: check
-                  spec:
-                    shell: Sh
-                    command: |-
-                      ls  
-                      cd harness/
               - stepGroup:
                   name: Pre_requisite
                   identifier: Pre_requisite
