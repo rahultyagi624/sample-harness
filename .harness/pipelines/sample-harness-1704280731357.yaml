@@ -28,7 +28,10 @@ pipeline:
                             identifier: npm_install_and_sfdx_cli
                             spec:
                               shell: Bash
-                              command: npm install --global sfdx-cli@$2.19.8
+                              command: |-
+                                npm install --global sfdx-cli@$2.19.8
+
+                                sfdx --version
                         - step:
                             type: Run
                             name: npm_install_sfdx_git
