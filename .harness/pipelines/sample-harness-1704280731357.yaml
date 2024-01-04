@@ -61,7 +61,7 @@ pipeline:
                   name: Auth_Salesforce_Org
                   identifier: Auth_Salesforce_Org
                   spec:
-                    shell: Powershell
+                    shell: Sh
                     command: |-
                       # npm install --global sfdx-cli@$2.19.8
                       sfdx --version
