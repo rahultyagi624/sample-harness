@@ -23,7 +23,9 @@ pipeline:
                   identifier: check
                   spec:
                     shell: Sh
-                    command: "ls "
+                    command: |-
+                      ls  
+                      cd harness/
               - stepGroup:
                   name: Pre_requisite
                   identifier: Pre_requisite
