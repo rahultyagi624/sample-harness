@@ -50,7 +50,7 @@ pipeline:
                        git --version
                        git clone 'https://github.com/Cager2808/sample-harness'
                        ls -alrt
-                      cd 'sample-harness'
+                      # cd 'sample-harness'
                       git branch
                       git diff --diff-filter=ACMRT HEAD^ HEAD
                       ls -alrt
