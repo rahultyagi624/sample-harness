@@ -21,27 +21,24 @@ pipeline:
                   identifier: npminstall
                   name: npm_install
                   spec:
-                    command: npm install
+                    shell: Sh
+                    command: |
+                      npm install
                   timeout: ""
                   type: Run
               - step:
-                  identifier: npmtest
-                  name: npm_test
-                  spec:
-                    command: npm run test
-                  timeout: ""
                   type: Run
-              - step:
-                  identifier: npmtest1
-                  name: npm_test
+                  name: sfdx install
+                  identifier: sfdx_install
                   spec:
-                    command: npm run lint
-                  timeout: ""
-                  type: Run
+                    shell: Bash
+                    command: |-
+                      npm install --global sfdx-cli
+                      sfdx --version
           platform:
-            arch: Amd64
             os: Linux
+            arch: Amd64
           runtime:
-            spec: {}
             type: Cloud
+            spec: {}
         type: CI
