@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_rahultyagi624_sample_harness_1704430994203-pr-trigger-input-set
+  identifier: Build_rahultyagi624_sample_harness_1704430994203prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: sademo
+  pipeline:
+    identifier: Build_rahultyagi624_sample_harness_1704430994203
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
