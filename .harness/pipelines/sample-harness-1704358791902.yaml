@@ -7,7 +7,7 @@ pipeline:
     ci:
       codebase:
         build: <+input>
-        connectorRef: account.Github
+        connectorRef: account.Github_OAuth_1698735122136
         repoName: Cager2808/sample-harness
   stages:
     - stage:
@@ -17,24 +17,68 @@ pipeline:
           cloneCodebase: true
           execution:
             steps:
+              - stepGroup:
+                  name: Pre_requisite
+                  identifier: Pre_requisite
+                  steps:
+                    - parallel:
+                        - step:
+                            type: Run
+                            name: npm_install_and_sfdx_cli
+                            identifier: npm_install_and_sfdx_cli
+                            spec:
+                              shell: Bash
+                              command: |-
+                                npm install --global sfdx-cli
+
+                                sfdx --version
+                        - step:
+                            type: Run
+                            name: npm_install_sfdx_git
+                            identifier: npm_install_sfdx_git
+                            spec:
+                              shell: Bash
+                              command: sudo npm install sfdx-git-delta@^4.x.x -g
               - step:
-                  identifier: npminstall
-                  name: npm_install
+                  type: Run
+                  name: Git_Diff_Check
+                  identifier: Git_Diff_Check
+                  spec:
+                    shell: Bash
+                    command: |2
+                       git --version
+                       git clone 'https://github.com/Cager2808/sample-harness'
+                       ls -alrt
+                      # cd 'sample-harness'
+                      git branch
+                      git diff --diff-filter=ACMRT HEAD^ HEAD
+                      ls -alrt
+                      sgd --to HEAD --from HEAD^ --repo . --output .
+                      ls -lart
+                      echo "package xml"
+                      cat package/package.xml
+                      echo "Display contents of Destructive changes xml"
+                      cat destructiveChanges/destructiveChanges.xml
+              - step:
+                  type: Run
+                  name: Auth_Salesforce_Org
+                  identifier: Auth_Salesforce_Org
                   spec:
                     shell: Sh
-                    command: |
-                      npm install
-                  timeout: ""
-                  type: Run
+                    command: |-
+                      # npm install --global sfdx-cli@$2.19.8
+                      sfdx --version
+                      sfdx force:auth:jwt:grant --clientid 3MVG9fe4g9fhX0E70si3nZ7pRd9stUfSWzrw8.TmNpvi20arkTILWJTPcLhXtGP_fsugnQJxKVs6HqTxdqQDG --jwtkeyfile server.key --username rhitikkhanna260@gmail.com --instance-url https://login.salesforce.com
               - step:
                   type: Run
-                  name: sfdx install
-                  identifier: sfdx_install
+                  name: Pre_validation
+                  identifier: Pre_validation
                   spec:
                     shell: Bash
                     command: |-
-                      npm install --global sfdx-cli
-                      sfdx --version
+                      ls -alrt
+                      sfdx force:source:deploy -c -x package/package.xml --postdestructivechanges destructiveChanges/destructiveChanges.xml --json -u rhitikkhanna260@gmail.com --verbose
+                  description: "Here validating the Test Class Coverage "
           platform:
             os: Linux
             arch: Amd64
